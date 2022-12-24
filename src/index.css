@@ -1,19 +1,79 @@
-body{
-  display: flex;
+html {
+  margin: auto;
+}
+
+body {
+  /* display: table-cell;
+  vertical-align: middle; */
+  /* display: block;
+  margin: auto;
   justify-content: center;
+  align-items: center; */
+  /* background-image: url('./Media/blob-scene-haikei.svg');
+  background-size:cover;
+  background: rgb(238,174,202);
+  background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%); */
+  font-family: sans-serif;
+  background: rgb(131,58,180);
+  background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+}
+
+.App {
+  margin: auto;
+  height: fit-content;
+  width: fit-content;
+  padding: 3em;
+  background: rgba( 255, 255, 255, 0.45 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 10.5px );
+  -webkit-backdrop-filter: blur( 10.5px );
+  border-radius: 10px;
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
+}
+
+header {
+  text-transform: uppercase;
+  font-size: 1.5em;
+}
+
+h1 {
+  margin: 0;
 }
 
 header, .CurrentPlayer {
   text-align: center;
+  color: white;
+  font-weight: bold;
 }
 
 .StartButton {
   display: flex;
   justify-content: center;
-  margin: 2em 0;
+  margin: 3em 0;
 }
+
+button {
+  padding: 1em;
+  border-radius: 2em;
+  text-transform: uppercase;
+  font-size: 1em;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.216);
+  color: white;
+  border-color: white;
+  border-style: solid;
+}
+
+button:hover {
+  background-color: rgba(255, 255, 255, 0.71);
+  color: black;
+  border-color: black;
+}
+
 .CurrentPlayer p {
   animation: fadeIn 1s;
+  transition: all 1s;
+  margin-bottom: 2.5em;
 }
 
 @keyframes fadeIn {
@@ -32,8 +92,6 @@ header, .CurrentPlayer {
   height: 70vw;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
-  gap: 2px;
-  background-color: black;
 }
 
 @media (orientation: landscape) {
@@ -45,9 +103,14 @@ header, .CurrentPlayer {
 }
 
 .Tile {
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.483);
   margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-style: solid;
+  border-color: whitesmoke;
+  border-left-color: black;
+  border-top-color: black;
+  font-size: 2.5em;
 }

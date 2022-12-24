@@ -5,8 +5,8 @@ const GameSpace = ({Game, turn, updateGame }) => {
 
     return (
     <div>
-        <BoardGame Game={Game} updateGame={updateGame} />
         <CurrentPlayer turn={turn}/>
+        <BoardGame Game={Game} updateGame={updateGame} />
     </div>
   )
 }
