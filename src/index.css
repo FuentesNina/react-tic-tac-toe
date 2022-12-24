@@ -1,13 +1,53 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+body{
+  display: flex;
+  justify-content: center;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+header, .CurrentPlayer {
+  text-align: center;
+}
+
+.StartButton {
+  display: flex;
+  justify-content: center;
+  margin: 2em 0;
+}
+.CurrentPlayer p {
+  animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+  from{
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.BoardGame {
+  margin: 2em auto;
+  display: grid;
+  width: 70vw;
+  height: 70vw;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 2px;
+  background-color: black;
+}
+
+@media (orientation: landscape) {
+  .BoardGame {
+    width: 50vh;
+    height: 50vh;
+    margin: auto;
+  }
+}
+
+.Tile {
+  background-color: white;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
