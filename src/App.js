@@ -25,7 +25,6 @@ function App() {
 
   // re-start game
   const reStart = () => {
-    // changeTurn();
     setTiles(emptyGame);
     turn = undefined;
     inProgress = true;
@@ -40,12 +39,10 @@ function App() {
     } else if (turn === undefined) {
       turn = 0;
     }
-
   }
 
   // Change the tiles set after a play
   const updateGame = (i) => {
-    // console.log(inProgress)
     if (inProgress === true) {
 
       changeTurn()
@@ -72,22 +69,22 @@ function App() {
 
       if (tiles[index1].play === tiles[index2].play && tiles[index2].play === tiles[index3].play) {
         if (tiles[index1].play === 1) {
-          inProgress = false;
           turn = null;
+          inProgress = false;
           return console.log('X Wins!');
         } else if (tiles[index1].play === 0) {
-          inProgress = false;
           turn = null;
+          inProgress = false;
           return console.log('O Wins!');
         }
       }
     }
 
-    let remaining = tiles.filter(el => el.play === null);
+    let remaining = tiles.filter(tile => tile.play === null);
 
     if (remaining.length === 0) {
-      inProgress = false;
       turn = null;
+      inProgress = false;
       return console.log('End of Game');
 
     }

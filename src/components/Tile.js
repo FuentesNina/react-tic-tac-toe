@@ -6,7 +6,6 @@ let icon = null;
 const Tile = ({id, play, updateGame}) => {
 
     const onClick = () => {
-
         if (play === null) {
             updateGame(id);
         }
