@@ -3,14 +3,14 @@ import StartButton from './components/StartButton'
 import GameSpace from './components/GameSpace'
 import { useState, useEffect } from 'react'
 
-let turn = undefined;
-let inProgress = true;
-let solutions = [
-  [0,1,2],[3,4,5],[6,7,8],
-  [0,3,6],[1,4,7],[2,5,8],
-  [0,4,8],[2,4,6]];
+
 
 function App() {
+
+  const solutions = [
+    [0,1,2],[3,4,5],[6,7,8],
+    [0,3,6],[1,4,7],[2,5,8],
+    [0,4,8],[2,4,6]];
 
   const emptyGame = () => {
     let tiles = [];
@@ -22,41 +22,50 @@ function App() {
   };
 
   const [tiles, setTiles] = useState(emptyGame);
+  const [status, setStatus] = useState();
+  const [turn, setTurn] = useState();
+  const [progress, setProgress] = useState(true);
 
   // re-start game
   const reStart = () => {
     setTiles(emptyGame);
-    turn = undefined;
-    inProgress = true;
+    setTurn(() => turn === 0 ? 1 : 0);
+    setProgress (() => true);
+    status = undefined;
   }
 
   // Define Who's Turn it is
   const changeTurn = () => {
     if (turn === 0) {
-      turn = 1;
+      setTurn(() => 1);
     } else if (turn === 1) {
-      turn = 0;
+      setTurn(() => 0)
     } else if (turn === undefined) {
-      turn = 0;
+      setTurn(() => 1)
     }
   }
 
   // Change the tiles set after a play
   const updateGame = (i) => {
-    if (inProgress === true) {
 
+    if (progress === true) {
       changeTurn()
 
       setTiles(() => {
         return tiles.map(el => {
-          return el.id === i ? {id: i, play: turn} : el;
+          if (turn === undefined) {
+            return el.id === i ? {id: i, play: 0} : el;
+          } else {
+            return el.id === i ? {id: i, play: turn} : el;
+          }
         })
       })
+
 
     }
   }
 
-  useEffect(() => setWinner())
+  useEffect(() => setWinner());
 
   // End Game (winning or draw)
   const setWinner = () => {
@@ -69,13 +78,15 @@ function App() {
 
       if (tiles[index1].play === tiles[index2].play && tiles[index2].play === tiles[index3].play) {
         if (tiles[index1].play === 1) {
-          turn = null;
-          inProgress = false;
-          return console.log('X Wins!');
+          setProgress (() => false);
+          setStatus(() => 'X Wins!');
+          setTurn(() => null);
+          return () => {};
         } else if (tiles[index1].play === 0) {
-          turn = null;
-          inProgress = false;
-          return console.log('O Wins!');
+          setTurn(() => null)
+          setProgress (() => false);
+          setStatus(() => 'O Wins!');
+          return () => {};
         }
       }
     }
@@ -83,19 +94,18 @@ function App() {
     let remaining = tiles.filter(tile => tile.play === null);
 
     if (remaining.length === 0) {
-      turn = null;
-      inProgress = false;
-      return console.log('End of Game');
-
+      setTurn(() => null)
+      setProgress (() => false);
+      setStatus(() => `O-X Draw\n-\nEnd of Game`);
+      return () => {};
     }
   }
-
 
   return (
     <div className="App">
       <Header />
       <StartButton onClick={reStart} />
-      <GameSpace  Game={tiles} turn={turn} updateGame={updateGame} />
+      <GameSpace  Game={tiles} turn={turn} updateGame={updateGame} status={status} Progress={progress} />
     </div>
   );
 }
