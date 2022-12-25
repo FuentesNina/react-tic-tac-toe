@@ -31,7 +31,7 @@ function App() {
     setTiles(emptyGame);
     setTurn(() => undefined);
     setProgress (() => true);
-    status = undefined;
+    setStatus(() => undefined);
   }
 
   // Define Who's Turn it is
