@@ -29,7 +29,7 @@ function App() {
   // re-start game
   const reStart = () => {
     setTiles(emptyGame);
-    setTurn(() => turn === 0 ? 1 : 0);
+    setTurn(() => undefined);
     setProgress (() => true);
     status = undefined;
   }
