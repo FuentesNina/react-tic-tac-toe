@@ -105,6 +105,7 @@ function App() {
     <div className="App">
       <Header />
       <StartButton onClick={reStart} />
+      <Settings />
       <GameSpace  Game={tiles} turn={turn} updateGame={updateGame} status={status} Progress={progress} />
     </div>
   );
