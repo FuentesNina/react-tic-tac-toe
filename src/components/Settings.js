@@ -1,18 +1,18 @@
 import React from 'react';
-import { useState } from 'react';
+// import { useState } from 'react';
 
-const Settings = ({showSettings, handleShowSettings}) => {
+const Settings = ({showSettings, handleShowSettings, gameType, handleGameType, level, handleLevel}) => {
 
-    const [gameType, setGameType] = useState('0');
-    const [level, setLevel] = useState('0');
+    // const [gameType, setGameType] = useState('0');
+    // const [level, setLevel] = useState('0');
 
-    const handleGameType = (e) => {
-        setGameType(e.target.value);
-    }
+    // const handleGameType = (e) => {
+    //     setGameType(e.target.value);
+    // }
 
-    const handleLevel = (e) => {
-        setLevel(e.target.value);
-    }
+    // const handleLevel = (e) => {
+    //     setLevel(e.target.value);
+    // }
 
   return (
     <div className='Settings'>
@@ -34,9 +34,6 @@ const Settings = ({showSettings, handleShowSettings}) => {
         }
         </>
         }
-
-
-
     </div>
   )
 }

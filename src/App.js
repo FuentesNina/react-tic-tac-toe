@@ -2,6 +2,7 @@ import Header from './components/Header'
 import StartButton from './components/StartButton'
 import Settings from './components/Settings'
 import GameSpace from './components/GameSpace'
+// import computerPlay from '.utilities/gameLogic'
 import { useState, useEffect } from 'react'
 
 
@@ -27,10 +28,24 @@ function App() {
   const [turn, setTurn] = useState();
   const [progress, setProgress] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
+  const [gameSettings, setGameSettings] = useState({gameType: '0', level: '0'});
 
-
+  //Game settings
   const handleShowSettings = () => {
     setShowSettings(!showSettings);
+  }
+  const handleGameType = (e) => {
+    setGameSettings(gameSettings => ({
+      ...gameSettings,
+      gameType: e.target.value
+    }));
+    console.log(gameSettings.gameType)
+  }
+  const handleLevel = (e) => {
+      setGameSettings(gameSettings => ({
+        ...gameSettings,
+        level: e.target.value
+      }));
   }
 
   // re-start game
@@ -68,10 +83,15 @@ function App() {
           }
         })
       })
-
-
     }
   }
+
+  //Computer Move
+  // const
+  // if (gameSettings.gameType === '0') {
+  //   const cpuMove = computerPlay(turn, gameSettings.level, tiles);
+  //   updateGame(cpuMove);
+  // } else
 
   useEffect(() => setWinner());
 
@@ -112,7 +132,12 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <Settings showSettings={showSettings} handleShowSettings={handleShowSettings} />
+      <Settings showSettings={showSettings}
+          handleShowSettings={handleShowSettings}
+          gameType={gameSettings.gameType}
+          level={gameSettings.level}
+          handleGameType={handleGameType}
+          handleLevel={handleLevel} />
       <StartButton onClick={reStart} />
       <GameSpace  Game={tiles} turn={turn} updateGame={updateGame} status={status} Progress={progress} />
     </div>
