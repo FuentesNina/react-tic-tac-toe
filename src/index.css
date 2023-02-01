@@ -38,7 +38,20 @@ header, .CurrentPlayer {
 .StartButton {
   display: flex;
   justify-content: center;
-  margin: 3em 0;
+  margin: 2em 0;
+}
+
+.Settings {
+  margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+button.showSettings {
+  font-size: 0.5em;
+  margin: 0.5em 0;
+  align-self: flex-end;
 }
 
 button {
@@ -53,11 +66,39 @@ button {
   border-style: solid;
 }
 
+.buttonGroup {
+  display: flex;
+  justify-content: center;
+  margin: 0.5em 0;
+  font-size: 0.75em;
+}
+
+.buttonGroupStart {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right-width: 0;
+}
+
+.buttonGroupEnd {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.buttonGroupMiddle {
+  border-radius: 0;
+  border-right-width: 0;
+}
+
+button.active {
+  background-color: rgba(255, 255, 255, 0.382);
+  color: black;
+}
+
 @media (hover: hover){
   button:hover {
     background-color: rgba(255, 255, 255, 0.71);
     color: black;
-    border-color: black;
+    /* border-color: black; */
   }
 }
 

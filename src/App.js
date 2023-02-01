@@ -1,5 +1,6 @@
 import Header from './components/Header'
 import StartButton from './components/StartButton'
+import Settings from './components/Settings'
 import GameSpace from './components/GameSpace'
 import { useState, useEffect } from 'react'
 
@@ -25,6 +26,12 @@ function App() {
   const [status, setStatus] = useState();
   const [turn, setTurn] = useState();
   const [progress, setProgress] = useState(true);
+  const [showSettings, setShowSettings] = useState(false);
+
+
+  const handleShowSettings = () => {
+    setShowSettings(!showSettings);
+  }
 
   // re-start game
   const reStart = () => {
@@ -32,6 +39,7 @@ function App() {
     setTurn(() => undefined);
     setProgress (() => true);
     setStatus(() => undefined);
+    setShowSettings(false);
   }
 
   // Define Who's Turn it is
@@ -104,8 +112,8 @@ function App() {
   return (
     <div className="App">
       <Header />
+      <Settings showSettings={showSettings} handleShowSettings={handleShowSettings} />
       <StartButton onClick={reStart} />
-      <Settings />
       <GameSpace  Game={tiles} turn={turn} updateGame={updateGame} status={status} Progress={progress} />
     </div>
   );
