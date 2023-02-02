@@ -90,13 +90,23 @@ function App() {
     if (gameSettings.gameType === '0' && turn === 1) {
       const cpuMoveIndex = computerPlay(tiles, gameSettings.level);
 
-      setTiles(() => {
-        return tiles.map(el => {
-            return el.id === cpuMoveIndex ? {id: cpuMoveIndex, play: 1} : el;
-          })
-      })
+      //freeze game board
+      setProgress(false);
 
-      changeTurn();
+      //delay
+      setTimeout(() => {
+        setTiles(() => {
+          return tiles.map(el => {
+              return el.id === cpuMoveIndex ? {id: cpuMoveIndex, play: 1} : el;
+            })
+        })
+
+        changeTurn();
+
+        //unfreeze game board
+        setProgress(true);
+      }, 500);
+
     }
   };
 
