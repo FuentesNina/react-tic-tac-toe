@@ -1,6 +1,8 @@
 import Header from './components/Header'
 import StartButton from './components/StartButton'
+import Settings from './components/Settings'
 import GameSpace from './components/GameSpace'
+import computerPlay from './utilities/gameLogic'
 import { useState, useEffect } from 'react'
 
 
@@ -25,23 +27,42 @@ function App() {
   const [status, setStatus] = useState();
   const [turn, setTurn] = useState();
   const [progress, setProgress] = useState(true);
+  const [showSettings, setShowSettings] = useState(false);
+  const [gameType, setGameType] = useState('0');
+  const [level, setLevel] = useState('1');
+  const [gameSettings, setGameSettings] = useState({gameType: gameType, level: level});
+
+  //Game settings
+  const handleShowSettings = () => {
+    setShowSettings(!showSettings);
+  }
+  const handleGameType = (e) => {
+    setGameType(e.target.value);
+  }
+  const handleLevel = (e) => {
+    setLevel(e.target.value);
+  }
 
   // re-start game
   const reStart = () => {
     setTiles(emptyGame);
-    setTurn(() => undefined);
-    setProgress (() => true);
-    setStatus(() => undefined);
+    setTurn(undefined);
+    setProgress (true);
+    setStatus(undefined);
+    setShowSettings(false);
+    setGameSettings(gameSettings => ({
+      ...gameSettings,
+      level: level,
+      gameType: gameType
+    }));
   }
 
   // Define Who's Turn it is
   const changeTurn = () => {
-    if (turn === 0) {
-      setTurn(() => 1);
+    if (turn === 0 || turn === undefined) {
+      setTurn(1);
     } else if (turn === 1) {
-      setTurn(() => 0)
-    } else if (turn === undefined) {
-      setTurn(() => 1)
+      setTurn(0)
     }
   }
 
@@ -60,12 +81,34 @@ function App() {
           }
         })
       })
-
-
     }
   }
 
   useEffect(() => setWinner());
+
+  const cpuMove = () => {
+    if (gameSettings.gameType === '0' && turn === 1) {
+      const cpuMoveIndex = computerPlay(tiles, gameSettings.level);
+
+      //freeze game board
+      setProgress(false);
+
+      //delay
+      setTimeout(() => {
+        setTiles(() => {
+          return tiles.map(el => {
+              return el.id === cpuMoveIndex ? {id: cpuMoveIndex, play: 1} : el;
+            })
+        })
+
+        changeTurn();
+
+        //unfreeze game board
+        setProgress(true);
+      }, 500);
+
+    }
+  };
 
   // End Game (winning or draw)
   const setWinner = () => {
@@ -98,12 +141,20 @@ function App() {
       setProgress (() => false);
       setStatus(() => `O-X Draw\n-\nEnd of Game`);
       return () => {};
+    } else {
+      cpuMove();
     }
   }
 
   return (
     <div className="App">
       <Header />
+      <Settings showSettings={showSettings}
+          handleShowSettings={handleShowSettings}
+          gameType={gameType}
+          level={level}
+          handleGameType={handleGameType}
+          handleLevel={handleLevel} />
       <StartButton onClick={reStart} />
       <GameSpace  Game={tiles} turn={turn} updateGame={updateGame} status={status} Progress={progress} />
     </div>

@@ -1,5 +1,6 @@
 const EndOfGame = ({ status, inProgress }) => {
-   let show = inProgress ? 'none' : 'flex';
+   let show = inProgress || status === undefined ? 'none' : 'flex';
+   console.log(status)
 
    return (
     <div style={{display: show}} className='EndOfGame' >
