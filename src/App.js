@@ -2,7 +2,7 @@ import Header from './components/Header'
 import StartButton from './components/StartButton'
 import Settings from './components/Settings'
 import GameSpace from './components/GameSpace'
-// import computerPlay from '.utilities/gameLogic'
+import computerPlay from './utilities/gameLogic'
 import { useState, useEffect } from 'react'
 
 
@@ -28,43 +28,41 @@ function App() {
   const [turn, setTurn] = useState();
   const [progress, setProgress] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
-  const [gameSettings, setGameSettings] = useState({gameType: '0', level: '0'});
+  const [gameType, setGameType] = useState('0');
+  const [level, setLevel] = useState('1');
+  const [gameSettings, setGameSettings] = useState({gameType: gameType, level: level});
 
   //Game settings
   const handleShowSettings = () => {
     setShowSettings(!showSettings);
   }
   const handleGameType = (e) => {
-    setGameSettings(gameSettings => ({
-      ...gameSettings,
-      gameType: e.target.value
-    }));
-    console.log(gameSettings.gameType)
+    setGameType(e.target.value);
   }
   const handleLevel = (e) => {
-      setGameSettings(gameSettings => ({
-        ...gameSettings,
-        level: e.target.value
-      }));
+    setLevel(e.target.value);
   }
 
   // re-start game
   const reStart = () => {
     setTiles(emptyGame);
-    setTurn(() => undefined);
-    setProgress (() => true);
-    setStatus(() => undefined);
+    setTurn(undefined);
+    setProgress (true);
+    setStatus(undefined);
     setShowSettings(false);
+    setGameSettings(gameSettings => ({
+      ...gameSettings,
+      level: level,
+      gameType: gameType
+    }));
   }
 
   // Define Who's Turn it is
   const changeTurn = () => {
-    if (turn === 0) {
-      setTurn(() => 1);
+    if (turn === 0 || turn === undefined) {
+      setTurn(1);
     } else if (turn === 1) {
-      setTurn(() => 0)
-    } else if (turn === undefined) {
-      setTurn(() => 1)
+      setTurn(0)
     }
   }
 
@@ -86,14 +84,21 @@ function App() {
     }
   }
 
-  //Computer Move
-  // const
-  // if (gameSettings.gameType === '0') {
-  //   const cpuMove = computerPlay(turn, gameSettings.level, tiles);
-  //   updateGame(cpuMove);
-  // } else
-
   useEffect(() => setWinner());
+
+  const cpuMove = () => {
+    if (gameSettings.gameType === '0' && turn === 1) {
+      const cpuMoveIndex = computerPlay(tiles, gameSettings.level);
+
+      setTiles(() => {
+        return tiles.map(el => {
+            return el.id === cpuMoveIndex ? {id: cpuMoveIndex, play: 1} : el;
+          })
+      })
+
+      changeTurn();
+    }
+  };
 
   // End Game (winning or draw)
   const setWinner = () => {
@@ -126,6 +131,8 @@ function App() {
       setProgress (() => false);
       setStatus(() => `O-X Draw\n-\nEnd of Game`);
       return () => {};
+    } else {
+      cpuMove();
     }
   }
 
@@ -134,8 +141,8 @@ function App() {
       <Header />
       <Settings showSettings={showSettings}
           handleShowSettings={handleShowSettings}
-          gameType={gameSettings.gameType}
-          level={gameSettings.level}
+          gameType={gameType}
+          level={level}
           handleGameType={handleGameType}
           handleLevel={handleLevel} />
       <StartButton onClick={reStart} />
