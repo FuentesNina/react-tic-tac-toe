@@ -14,10 +14,14 @@ The MVP version of this app will include:
 
 MVP completed on 12/24/2022
 
+## Updates
+- option to play against AI - added 02/01/2023
 
+
+## Future work
 Future versions of this app can include:
 - animation for each play
 - cross out winning line before declaring winner
 - different display option (face to face on phone vs both players facing computer)
 - undo play button
-- option to play against AI
+- option to play against AI [DONE]
