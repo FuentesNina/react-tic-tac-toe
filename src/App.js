@@ -86,6 +86,7 @@ function App() {
 
   useEffect(() => setWinner());
 
+  // Generate and Place computer Move (if applicable)
   const cpuMove = () => {
     if (gameSettings.gameType === '0' && turn === 1) {
       const cpuMoveIndex = computerPlay(tiles, gameSettings.level);
@@ -93,7 +94,7 @@ function App() {
       //freeze game board
       setProgress(false);
 
-      //delay
+      //delay to simulate computer "thinking")
       setTimeout(() => {
         setTiles(() => {
           return tiles.map(el => {
@@ -110,7 +111,7 @@ function App() {
     }
   };
 
-  // End Game (winning or draw)
+  // monitors game - set winner/loser & add computer play if applicable
   const setWinner = () => {
 
     for (let i = 0; i < solutions.length; i++) {
